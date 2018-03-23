@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,10 @@ public class CurriculumRepositoryTest {
 	@Before
 	public void init() {
 		log.info("Initializing a test curriculum object for testing.");
-		testCurriculum = new Curriculum();
-		testCurriculum = curriculumRepository.save(testCurriculum);
+		testCurriculum = new Curriculum("INIT SDET");
 	}
 
-	@After
+	//@After
 	public void teardown() {
 		log.info("Tear down");
 		if (curriculumRepository.findOneByCurriculumId(testCurriculum.getCurriculumId()) != null) {
@@ -55,8 +55,7 @@ public class CurriculumRepositoryTest {
 	@Test
 	public void addCurriculum() {
 		log.info("Test adding a curriculum.");
-		testCurriculum = new Curriculum();
-		Curriculum savedCurriculum = curriculumRepository.save(testCurriculum);
+		Curriculum savedCurriculum = curriculumRepository.save(new Curriculum("ADD SDET"));
 
 		assertTrue(curriculumRepository.findAll().contains(savedCurriculum));
 	}
@@ -64,6 +63,7 @@ public class CurriculumRepositoryTest {
 	@Test
 	public void findOneByPlacmentId() {
 		log.info("Test getting a curriculum by curriculumId.");
+		testCurriculum = curriculumRepository.save(testCurriculum);
 		Curriculum curriculum = curriculumRepository.findOneByCurriculumId(testCurriculum.getCurriculumId());
 
 		assertEquals(testCurriculum, curriculum);
@@ -80,15 +80,17 @@ public class CurriculumRepositoryTest {
 	@Test
 	public void updateCurriculum() {
 		log.info("Test updating a curriculum.");
-		testCurriculum.setCurriculumName("SDET");;
+		testCurriculum = curriculumRepository.save(testCurriculum);
+		testCurriculum.setCurriculumName("UPDATE SDET");
 		Curriculum updatedCurriculum = curriculumRepository.save(testCurriculum);
-
-		assertEquals(updatedCurriculum.getCurriculumName(), testCurriculum.getCurriculumName());
+		
+		assertEquals(updatedCurriculum, testCurriculum);
 	}
 
 	@Test
 	public void deleteCurriculum() {
 		log.info("Test deleting a curriculum.");
+		testCurriculum = curriculumRepository.save(testCurriculum);
 		curriculumRepository.delete(testCurriculum);
 
 		assertNull(curriculumRepository.findOneByCurriculumId(testCurriculum.getCurriculumId()));
