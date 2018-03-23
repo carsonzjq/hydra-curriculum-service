@@ -44,7 +44,7 @@ public class CurriculumRepositoryTest {
 		testCurriculum = new Curriculum("INIT SDET");
 	}
 
-	//@After
+	@After
 	public void teardown() {
 		log.info("Tear down");
 		if (curriculumRepository.findOneByCurriculumId(testCurriculum.getCurriculumId()) != null) {
