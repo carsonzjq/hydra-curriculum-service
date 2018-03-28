@@ -19,7 +19,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "HYDRA_CURRICULUM")
+@Table(name = "TRACKFORCE_CURRICULUM")
 @Cacheable
 public class Curriculum implements Serializable {
 
