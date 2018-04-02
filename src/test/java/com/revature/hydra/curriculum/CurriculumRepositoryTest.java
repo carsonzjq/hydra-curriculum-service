@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +37,18 @@ public class CurriculumRepositoryTest {
 
 	Curriculum testCurriculum;
 
+	/**
+	 * Setup test environment for each test case.
+	 */
 	@Before
 	public void init() {
 		log.info("Initializing a test curriculum object for testing.");
 		testCurriculum = new Curriculum("INIT SDET");
 	}
 
+	/**
+	 * Clean up the changes made by every test.
+	 */
 	@After
 	public void teardown() {
 		log.info("Tear down");
@@ -52,6 +57,9 @@ public class CurriculumRepositoryTest {
 		}
 	}
 
+	/**
+	 * Test adding a curriculum by curriculumRepository.save(curriculum)
+	 */
 	@Test
 	public void addCurriculum() {
 		log.info("Test adding a curriculum.");
@@ -60,6 +68,9 @@ public class CurriculumRepositoryTest {
 		assertTrue(curriculumRepository.findAll().contains(savedCurriculum));
 	}
 
+	/**
+	 * Test getting a curriculum by curriculumId through curriculumRepository.findOneByCurriculumId(curriculumId)
+	 */
 	@Test
 	public void findOneByPlacmentId() {
 		log.info("Test getting a curriculum by curriculumId.");
@@ -69,6 +80,9 @@ public class CurriculumRepositoryTest {
 		assertEquals(testCurriculum, curriculum);
 	}
 
+	/**
+	 * Test getting all curriculums by curriculumRepository.findAll()
+	 */
 	@Test
 	public void findAll() {
 		log.info("Test getting all curriculums.");
@@ -77,6 +91,9 @@ public class CurriculumRepositoryTest {
 		assertFalse(curriculums.isEmpty());
 	}
 
+	/**
+	 * Test updating an existing curriculum by curriculumRepository.save(curriculum)
+	 */
 	@Test
 	public void updateCurriculum() {
 		log.info("Test updating a curriculum.");
@@ -87,6 +104,9 @@ public class CurriculumRepositoryTest {
 		assertEquals(updatedCurriculum, testCurriculum);
 	}
 
+	/**
+	 * Test deleting a curriculum by curriculumRepository.delete(curriculum)
+	 */
 	@Test
 	public void deleteCurriculum() {
 		log.info("Test deleting a curriculum.");

@@ -33,6 +33,13 @@ import com.revature.beans.Curriculum;
 import com.revature.hydra.curriculum.application.CurriculumRepositoryServiceApplication;
 import com.revature.hydra.curriculum.data.CurriculumRepository;
 
+/**
+ * Integrating test from controller layer to repository layer
+ * Use Spring MVC Test framework to stimulate end-point hitting
+ * 
+ * @author JIAQI ZHANG
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= CurriculumRepositoryServiceApplication.class)
 public class CurriculumControllerTest {
@@ -65,6 +72,9 @@ public class CurriculumControllerTest {
                 this.mappingJackson2HttpMessageConverter);
     }
 	
+	/**
+	 * Setup test environment for each test case.
+	 */
 	@Before
 	public void init() {
 		log.info("Initializing a test curriculum object for testing.");
@@ -73,6 +83,9 @@ public class CurriculumControllerTest {
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
 	}
 	
+	/**
+	 * Remove possible changes made by test
+	 */
 	@After
 	public void tearDown() {
 		log.info("Tear down");
@@ -81,6 +94,11 @@ public class CurriculumControllerTest {
 		}
 	}
 	
+	/**
+	 * Test getting a curriculum for a specific curriculumId by hitting end-point /one/placement/{id}
+	 * 
+	 * @throws Exception
+	 */
     @Test
     public void findOneCurriculumTest() throws Exception {
     	log.info("Testing /one/curriculum/{id} endpoint...");
@@ -90,6 +108,11 @@ public class CurriculumControllerTest {
                 .andExpect(jsonPath("$.curriculumName", is(testCurriculum.getCurriculumName())));
     }
     
+	/**
+	 * Test getting all placements by hitting end-point /all/placement
+	 * 
+	 * @throws Exception
+	 */
     @Test
 	public void findAllTest() throws Exception {
     	log.info("Testing /all/curriculum endpoint...");
@@ -98,6 +121,11 @@ public class CurriculumControllerTest {
 					.andExpect(content().contentType(mediaTypeJson));
 	}
     
+	/**
+	 * Test creating a placement by hitting end-point /placement/create
+	 * 
+	 * @throws Exception
+	 */
     @Test
     public void createCurriculumTest() throws Exception {
     	log.info("Testing /curriculum/create endpoint...");
@@ -109,6 +137,11 @@ public class CurriculumControllerTest {
                 .andExpect(status().isCreated());
     }
     
+	/**
+	 * Test updating an existing placement by hitting end-point /placement/update
+	 * 
+	 * @throws Exception
+	 */
     @Test
 	public void updateCurriculumTest() throws Exception {
     	log.info("Testing /curriculum/update endpoint...");
@@ -119,8 +152,13 @@ public class CurriculumControllerTest {
 					.andExpect(status().isNoContent());
 	}
     
+	/**
+	 * Test deleting a placement by hitting end-point /placement/delete/{id}
+	 * 
+	 * @throws Exception
+	 */
     @Test
-	public void test7DeleteMs() throws Exception {
+	public void deleteCurriculumTest() throws Exception {
     	log.info("Testing /curriculum/delete/{id} endpoint...");
 		this.mockMvc.perform(delete("/curriculum/delete/" + testCurriculum.getCurriculumId()))
 					.andExpect(status().isNoContent());
